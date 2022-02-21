@@ -1,6 +1,11 @@
 function authMiddleware(req, res, next) {
-  console.log("auth middle");
-  next();
+  const { authorization } = req.headers;
+
+  if (authorization === "mysecret") {
+    return next();
+  } else {
+    next({ code: "UNAUTHORIZED", message: "invalid token" });
+  }
 }
 
 module.exports = (router) => {
